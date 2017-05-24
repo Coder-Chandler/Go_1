@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*- 2
+#from __future__ import print_function
 import datetime
 class Person(object):
     def __init__(self, name, gender):
@@ -107,7 +108,7 @@ def add():
     gender = raw_input('输入要添加的学生性别 ： ')
     newstudent = Student(name, gender)
     year,month,day = raw_input('输入被添加学生的出生日期 ： ').split()
-    assert len((year, month, day)) == 3, '出生日期输入格式有误！(示例：2001,01,01)'
+    assert len((year, month, day)) == 3 and type((year, month, day)) == int, '出生日期输入格式有误！(示例：2001,01,01)'
     newstudent.setBirthday(int(year), int(month), int(day))
     course = raw_input('输入要添加的学生专业 ： ')
     newstudent.setCourse(course)
@@ -121,14 +122,14 @@ def add():
                                 newstudent.getCourse(),newstudent.getParent(),\
                                 newstudent.getAddress(),newstudent.getSchool()
     return stu
-'''
+
 print add()
 for k,v in stu.items():
     print '%s ： %s '%(k,v)
-'''
+
 
 def Input():
     raw_input('您要添加(a)、修改(r)、查看(d)学生信息？ ： ')
-    
+
 
 
