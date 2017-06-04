@@ -1,0 +1,6 @@
+(1, 'asd') : ('qwe', 25, 'jhasd\\', ('wds', 'nnd', '1232145'), 'saedqw', 'dqw')
+(2, 'wewqe') : ('qwe', 139, 'sa', ('wqe', 'sad', '12312342'), 'dasf', '')
+(1, 'asd') : ('qwe', 25, 'jhasd\\', ('wds', 'nnd', '1232145'), 'saedqw', 'dqw')
+(1, 'we') : ('qwe', 95, 'sad', ('as', 'qwe', '12341'), 'ewq', 'asd')
+(1, 'we') : ('qwe', 95, 'sad', ('as', 'qwe', '12341'), 'ewq', 'asd')
+(2, 'qweqw') : ('dsf', 139, 'asd', ('qwewq', 'qwe', '123342432'), 'qwe', 'asd')
