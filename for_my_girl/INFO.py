@@ -12,7 +12,7 @@ class Person(object):
         return self.name
 
     def getName(self):
-        return str(self.name)
+        return self.name
 
     def getGender(self):
         return self.gender
@@ -98,11 +98,10 @@ class Parent(Person):
             self.phone = phone
 
     def getPhone(self):
-        return self.phone
-
-stu ={}
+        return str(self.phone)
 
 def add():
+    stu ={}
     name = raw_input('输入要添加的学生姓名 ： ')
     gender = raw_input('输入要添加的学生性别 ： ')
     newstudent = Student(name, gender)
@@ -121,10 +120,11 @@ def add():
     newstudent.setAddress(address)
     school = raw_input('输入要添加的学生所在学校 ： ')
     newstudent.setSchool(school)
-    stu[newstudent.getIdNum(),newstudent.getName()] = newstudent.getGender(),newstudent.getAge(),\
-                                newstudent.getCourse(),(newstudent.getParent(),\
-                                P.getGender(),P.getPhone()),\
-                                newstudent.getAddress(),newstudent.getSchool()
+    stu[newstudent.getName()] = \
+    (newstudent.getGender(), newstudent.getAge(),
+    newstudent.getCourse(), (newstudent.getParent(),
+    P.getGender(), P.getPhone()),
+    newstudent.getAddress(), newstudent.getSchool())
     return stu
 
 def Input():
@@ -135,15 +135,33 @@ def Input():
         '输入有误！ （a：添加 r：修改 d：查看）'
         if usr == 'a':
             call = add() 
-            for key, value in call.iteritems():          
-                namefile.write('%s : %s\n'%(str(key), str(value)))            
-        if usr == 'q':
+            namefile.write(str(call.items()))          
+        elif usr == 'q':
             namefile.close()
+            break
             return '已关闭'
-        if usr == 'd':
-            print namefile.read()                  
+        elif usr == 'd':
+            usr_p = raw_input('查看某一位学生(s)、查看所有学生信息(p) ： ')
+            if usr_p == 'p':
+                print namefile.read()
+            elif usr_p == 's':
+                usr_s = raw_input('输入学生姓名 ： ')
+                stuinfo = namefile.readlines()
+                stu = [i for i in iter(stuinfo) if i[0] == usr_s]
+                if stu != '':
+                    print stu[0]
+                else:
+                    print '没有这名学生'                                                
+        else:
+            break
+    return '已关闭学生信息'                
 print Input()
 
-
+'''
+'学生性别->' + newstudent.getGender(),'学生年龄->' + newstudent.getAge(),\
+'所报专业->' + newstudent.getCourse(),'监护人情况->' + ('监护人姓名->' + newstudent.getParent(),\
+'监护人性别->' + P.getGender(),'监护人电话->' + P.getPhone()),\
+'家庭地址->' + newstudent.getAddress(),'所在学校->' + newstudent.getSchool()
+'''
 
 
