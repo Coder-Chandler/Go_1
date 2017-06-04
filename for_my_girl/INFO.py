@@ -112,37 +112,36 @@ def add():
     course = raw_input('输入要添加的学生专业 ： ')
     newstudent.setCourse(course)
     parent = raw_input('输入要添加的学生监护人姓名 ： ')
+    parent_gender = raw_input('输入监护人性别 ： ')
+    parent_phone = raw_input('输入监护人电话号码 ： ')
     newstudent.setParent(parent)
+    P = Parent(newstudent.getParent(), parent_gender)
+    P.setPhone(parent_phone)
     address = raw_input('输入要添加的学生住址 ： ')
     newstudent.setAddress(address)
     school = raw_input('输入要添加的学生所在学校 ： ')
     newstudent.setSchool(school)
-    stu[newstudent.getName()] = newstudent.getGender(),newstudent.getAge(),\
-                                newstudent.getCourse(),newstudent.getParent(),\
+    stu[newstudent.getIdNum(),newstudent.getName()] = newstudent.getGender(),newstudent.getAge(),\
+                                newstudent.getCourse(),(newstudent.getParent(),\
+                                P.getGender(),P.getPhone()),\
                                 newstudent.getAddress(),newstudent.getSchool()
     return stu
-'''
-print add()
-for k,v in stu.items():
-    print '%s ： %s '%(k,v)
-'''
 
 def Input():
-    while 1:
-        usr = raw_input('您要添加(a)、修改(r)、查看(d)学生信息？ ： ')
-        assert type(usr) == str and usr in ['a','r','d'],\
+    while True:
+        namefile = open("dict.txt",'a+')
+        usr = raw_input('您要添加(a)、修改(r)、查看(d)学生信息？退出(q) ： ')
+        assert type(usr) == str and usr in ['a','r','d','q'],\
         '输入有误！ （a：添加 r：修改 d：查看）'
         if usr == 'a':
-            call = add()
-            dictfile = open(r'dict.txt','a')
-            for key in call:
-                dictfile.write('%s'%(key))
-                for innerkey in call[key]:
-                    dictfile.write(' %s'%(str(innerkey)))
-            dictfile.write('\n')
-            dictfile.close()
-
-
+            call = add() 
+            for key, value in call.iteritems():          
+                namefile.write('%s : %s\n'%(str(key), str(value)))            
+        if usr == 'q':
+            namefile.close()
+            return '已关闭'
+        if usr == 'd':
+            print namefile.read()                  
 print Input()
 
 
