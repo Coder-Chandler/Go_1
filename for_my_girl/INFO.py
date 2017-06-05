@@ -1,5 +1,8 @@
 #-*- coding: utf-8 -*- 2
+#!/usr/bin/env python
+#encoding: utf-8
 import datetime
+import codecs
 class Person(object):
     def __init__(self, name, gender):
         '''create a person called name'''
@@ -29,7 +32,7 @@ class Person(object):
         '''sets self's birthday to birthDate'''
         if self.birthday == None:
             raise ValueError
-        return (datetime.date.today() - self.birthday).days/365
+        return str((datetime.date.today() - self.birthday).days/365)
 
     def __lt__(self,other):
         '''Sorted by last name, if the same name then random sort'''
@@ -101,7 +104,7 @@ class Parent(Person):
         return str(self.phone)
 
 def add():
-    stu ={}
+    stu =[]
     name = raw_input('输入要添加的学生姓名 ： ')
     gender = raw_input('输入要添加的学生性别 ： ')
     newstudent = Student(name, gender)
@@ -120,26 +123,25 @@ def add():
     newstudent.setAddress(address)
     school = raw_input('输入要添加的学生所在学校 ： ')
     newstudent.setSchool(school)
-    stu[newstudent.getName()] = \
-    (newstudent.getGender(), newstudent.getAge(),
-    newstudent.getCourse(), (newstudent.getParent(),
-    P.getGender(), P.getPhone()),
-    newstudent.getAddress(), newstudent.getSchool())
+    stu = [newstudent.getName(),newstudent.getGender(), newstudent.getAge(),
+    newstudent.getCourse(),newstudent.getParent(),P.getGender(), P.getPhone(),
+    newstudent.getAddress(), newstudent.getSchool()]
     return stu
 
 def Input():
     while True:
-        namefile = open("dict.txt",'a+')
+        namefile = codecs.open("info.txt",'a+','utf-8')
         usr = raw_input('您要添加(a)、修改(r)、查看(d)学生信息？退出(q) ： ')
         assert type(usr) == str and usr in ['a','r','d','q'],\
         '输入有误！ （a：添加 r：修改 d：查看）'
         if usr == 'a':
-            call = add() 
-            namefile.write(str(call.items()))          
+            call = add()
+            for i in call:
+                namefile.write(unicode(i+' ','utf-8'))
+            namefile.write('\n')
         elif usr == 'q':
             namefile.close()
             break
-            return '已关闭'
         elif usr == 'd':
             usr_p = raw_input('查看某一位学生(s)、查看所有学生信息(p) ： ')
             if usr_p == 'p':
@@ -147,14 +149,15 @@ def Input():
             elif usr_p == 's':
                 usr_s = raw_input('输入学生姓名 ： ')
                 stuinfo = namefile.readlines()
-                stu = [i for i in iter(stuinfo) if i[0] == usr_s]
-                if stu != '':
-                    print stu[0]
-                else:
-                    print '没有这名学生'                                                
+                for i in stuinfo:
+                    s = i.split()
+                    if s[0] == usr_s:
+                        print i
+                #else:
+                    #print '没有这名学生'
         else:
             break
-    return '已关闭学生信息'                
+    return '已关闭学生信息'
 print Input()
 
 '''
@@ -163,5 +166,3 @@ print Input()
 '监护人性别->' + P.getGender(),'监护人电话->' + P.getPhone()),\
 '家庭地址->' + newstudent.getAddress(),'所在学校->' + newstudent.getSchool()
 '''
-
-
