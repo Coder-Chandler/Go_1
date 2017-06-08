@@ -1,5 +1,5 @@
 # Url Scheduler
-from url_spider import html_outputer, html_downloader, url_manager, html_parser
+import html_outputer, html_downloader, url_manager, html_parser
 
 
 class SpiderMain(object):
@@ -45,10 +45,10 @@ class SpiderMain(object):
 
                 # We need to set a judgment condition to break the loop,
                 # also the number of times to crawl the data
-                if count == 100:
+                if count == 1000:
                     break
                 count += 1
-                print "OK !"
+                #print "OK !"
             except:
                 # print some information if the spider fetch some failed links
                 print 'Craw failed'
