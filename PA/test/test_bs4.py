@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 import re
+import urllib2
+
+req = urllib2.urlopen('https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD')
 
 html_doc = '''
 <html><head><title>The Dormouse's story</title></head>
