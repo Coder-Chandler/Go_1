@@ -28,26 +28,27 @@ class SpiderMain(object):
                 print 'Craw %d : %s'%(count, new_url)
                 # when we get the new_url from url_manager,we need to download that url with html_downloader
                 html_cont = self.downloader.download(new_url)
-                print 'html_cont is OK !'
+                '''print "html_cont is OK !"'''
                 # Every time When we download a new_url,we need to get the data from it,
                 # and we also need to get all the sub-links(html_cont) from this new_url,
                 # so we need a parser(in html_parser) !
                 new_urls, new_data = self.parser.parse(new_url, html_cont)
-                print 'new_urls, new_data is OK !'
+                '''print "new_urls, new_data is OK !"'''
                 # Take these sub links back to url_manager that make the spider_main can call these sub links
                 # in this while loop and get some data we need from thses sub links
                 self.urls.add_new_urls(new_urls)
-                print 'add_new_urls is OK !'
+                '''print "add_new_urls is OK !"'''
                 # Every time we complete the fetch, download, parse a url,
                 # we need to output the data we get through the outputer
                 self.outputer.collect_data(new_data)
-                print 'collect_data is OK !'
+                '''print "collect_data is OK !"'''
 
                 # We need to set a judgment condition to break the loop,
                 # also the number of times to crawl the data
-                if count == 10:
+                if count == 100:
                     break
                 count += 1
+                print "OK !"
             except:
                 # print some information if the spider fetch some failed links
                 print 'Craw failed'
@@ -56,6 +57,6 @@ class SpiderMain(object):
 
 
 if __name__ == '__main__':
-    root_url = 'https://www.pinterest.com/search/pins/?q=watercolor%20love%20couple'
+    root_url = 'https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD'
     obj_spider = SpiderMain()
     obj_spider.craw(root_url)
