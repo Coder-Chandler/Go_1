@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """BLOG URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,6 +19,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^blog/', include('blog.urls')),
+    url(r'^blog/', include('blog.urls', namespace='blog')),  # 此处设置根url （http://127.0.0.1:8000/blog/）
     url(r'^blog2/', include('blog2.urls'))
 ]
