@@ -218,3 +218,84 @@ PUT lagou/job/2
   "publish_date": "2017-11-18",
   "comments": 20
 }
+
+GET lagou/_mapping/job
+GET _all/_mapping/job
+
+################################################
+PUT lagou
+{
+  "mappings": {
+    "job": {
+      "properties": {
+        "title": {
+          "store": true, 
+          "type":"text",
+          "analyzer": "ik_max_word"
+        },
+        "company_name": {
+          "store": true,
+          "type":"keyword"
+        },
+        "desc": {
+          "type":"text"
+        },
+        "comments": {
+          "type":"integer"
+        },
+        "add_time": {
+          "type":"date",
+          "format":"yyyy-MM-dd"
+        }
+      }
+    }
+  }
+}
+
+POST lagou/job/
+{
+  "title": "python scrapy enginer",
+  "company_name": "微软亚洲研究院",
+  "desc": "熟悉django，熟悉python，熟悉scrapy框架",
+  "comments":20,
+  "add_time":"2017-11-18"
+}
+POST lagou/job/
+{
+  "title": "python Django前端工程师",
+  "company_name": "谷歌",
+  "desc": "熟悉django，对前端基础知识非常熟悉",
+  "comments":29,
+  "add_time":"2017-11-17"
+}
+
+POST lagou/job/
+{
+  "title": "python机器学习",
+  "company_name": "instagram",
+  "desc": "熟练掌握python基础知识，了解大数据，分布式",
+  "comments":20,
+  "add_time":"2017-11-18"
+}
+
+
+# match查
+GET lagou/_search
+{
+  "query": {
+    "match": {
+      "title":"django"
+    }
+  }
+}
+
+# item查询
+GET lagou/_search
+{
+  "query": {
+    "item": {
+      "company":"微软"
+    }
+  }
+}
+
