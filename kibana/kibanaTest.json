@@ -279,23 +279,150 @@ POST lagou/job/
 }
 
 
-# match查
+# match查询
 GET lagou/_search
 {
   "query": {
     "match": {
-      "title":"django"
+      "title":"机器"
     }
   }
 }
 
-# item查询
+# term查询
 GET lagou/_search
 {
   "query": {
-    "item": {
-      "company":"微软"
+    "term": {
+      "company_name":"微软亚洲研究院"
     }
   }
 }
+
+# terms查询 
+GET lagou/_search
+{
+  "query": {
+    "terms": {
+      "title":["Django","scrapy","机器","前端"]
+    }
+  }
+}
+
+# 控制查询的返回数量 
+GET lagou/_search
+{
+  "query": {
+    "match": {
+      "title":"python"
+    }
+  },
+  "from":1,
+  "size":2
+}
+
+# match_all 查询
+GET lagou/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+# match_phrase查询（短语查询）
+GET lagou/_search
+{
+  "query": {
+    "match_phrase": {
+      "title": {
+        "query":"工程师",
+        "slop":6
+      }
+    }
+  }
+}
+
+#multi_match查询
+#比如可以指定多个字段
+#比如查询title和desc这两个字段里面包含的python的关键词文档
+GET lagou/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "python",
+      "fields": ["title^3","desc"]
+    }
+  }
+}
+
+#指定返回字段
+GET lagou/_search
+{
+  "stored_fields": ["title","company_name"],
+  "query": {
+    "match": {
+      "title": "python"
+    }
+  }
+}
+
+#通过sort把结果进行排序
+GET lagou/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "comments": {
+        "order": "asc"
+      }
+    }
+  ]
+}
+
+#查询范围
+#range查询
+GET lagou/_search
+{
+  "query": {
+    "range": {
+      "comments": {
+        "gt": 20,
+        "lte": 30,
+        "boost": 2.0
+      }
+    }
+  }
+}
+
+GET lagou/_search
+{
+  "query": {
+    "range": {
+      "add_time": {
+        "gt": "2017-2-1",
+        "lte": "now"
+      }
+    }
+  }
+}
+
+#wildcard
+GET lagou/_search
+{
+  "query": {
+    "wildcard": {
+      "title": {
+        "value": "djan*o",
+        "boost": 2.0
+      }
+    }
+  }
+}
+
+
+
+
+
 
