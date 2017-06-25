@@ -421,8 +421,108 @@ GET lagou/_search
   }
 }
 
+#bool查询
+#老版本的filtered已经被bool替换
+#用bool包括must should must_not filter来完成，格式如下：
+#{
+#    "filter":[],
+#    "must":[],
+#    "should":[],
+#    "must_not":[],
+#}
 
+#建立测试数据
+POST lagou/testjob/_bulk
+{"index":{"_id":1}}
+{"salary":10,"title":"python"}
+{"index":{"_id":2}}
+{"salary":20,"title":"Scrapy"}
+{"index":{"_id":3}}
+{"salary":30,"title":"Django"}
+{"index":{"_id":4}}
+{"salary":30,"title":"Elasticsearch"}
 
+DELETE lagou/testjob
+
+#简单的过滤查询
+
+#最简单的filter查询
+#select * from testjob where comments=20
+#filtered 薪资为20k的工作
+GET lagou/testjob/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "term": {
+          "salary": "10"
+        }
+      }
+    }
+  }
+}
+#也可以指定多个值
+GET lagou/testjob/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "terms": {
+          "salary": [10,20]
+        }
+      }
+    }
+  }
+}
+
+# select * from testjob where title="Python"
+GET lagou/testjob/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "term": {
+          "title":"django"
+        }
+      }
+    }
+  }
+}
+
+#查看分析器解析的结果
+GET _analyze
+{
+  "analyzer":"ik_max_word",
+  "text":"python网络开发工程师 "
+}
+
+#bool过滤查询，可以做组合过滤查询
+#select * from testjob where (salary=20 OR title=Python) AND (salary!=30)
+#查询薪资等于20k或者工作为Python的工作，排除薪资为30k的
+GET lagou/testjob/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {"term":{"salary":20}},
+        {"term":{"title":"python"}}
+      ],
+      "must_not": [
+        {"term":{"salary":30}}, 
+        {"term":{"salary":10}}
+        ]
+      }
+    }
+  }
 
 
 
