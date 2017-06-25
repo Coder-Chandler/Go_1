@@ -156,3 +156,10 @@ GET testdb/job1/_mget
   "ids":[1,2]
 }
 
+# 批量操作
+POST _bulk
+{"index":{"_index":"lagou","_type":"job1","_id":"1"}}
+{"title":"python spider","salary_min":20000,"city":"ShangHai","company":{"name":"BiliBili","company_addr":"ShangHai nanjing road"},"public_date":"2017-11-18","comments":"20"}
+{"index":{"_index":"lagou","_type":"job2","_id":"2"}}
+{"title":"python Django","salary_min":18000,"city":"ShangHai","company":{"name":"AcFun","company_addr":"ShangHai nanjing road"},"public_date":"2017-11-16","comments":"33"}
+
