@@ -163,3 +163,58 @@ POST _bulk
 {"index":{"_index":"lagou","_type":"job2","_id":"2"}}
 {"title":"python Django","salary_min":18000,"city":"ShangHai","company":{"name":"AcFun","company_addr":"ShangHai nanjing road"},"public_date":"2017-11-16","comments":"33"}
 
+
+#########################################
+# 创建索引
+PUT lagou
+{
+  "mappings": {
+    "job": {
+      "properties": {
+        "title": {
+          "type":"text"
+        },
+        "salary_min": {
+          "type":"integer"
+        },
+        "city": {
+          "type":"keyword"
+        },
+        "company": {
+          "properties": {
+            "name": {
+              "type":"text"
+            },
+            "company_addr": {
+              "type":"text"
+            },
+            "employee_count": {
+              "type":"integer"
+            }
+          }
+        },
+        "public_date": {
+          "type":"date",
+          "format":"yyyy-MM-dd"
+        },
+        "comments": {
+          "type":"integer"
+        }
+      }
+    }
+  }
+}
+# 放入数据
+PUT lagou/job/2
+{
+  "title": "python scrapy enginer",
+  "salary_min": 25000,
+  "city": "ShangHai",
+  "company":{
+    "name": "bilibili",
+    "company_addr": "ShangHai nanjing road",
+    "employee_count":50
+  },
+  "publish_date": "2017-11-18",
+  "comments": 20
+}
