@@ -1,0 +1,73 @@
+# es文档 ，索引的CRUD操作
+
+# 索引初始化操作 
+# 指定分片和副本的数量 
+# shards一旦设置不能修改 
+PUT lagou
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 5,
+      "number_of_replicas": 1
+    }
+  }
+}
+
+GET lagou/_settings
+GET _all/_settings
+GET .kibana,lagou/_settings
+GET _settings
+
+# 修改settings
+PUT lagou/_settings
+{
+  "number_of_replicas": 2
+}
+
+# 获取索引信息 
+GET _all
+GET lagou
+
+# 保存文档 
+PUT lagou/job/1
+{
+  "title": "python scrapy enginer",
+  "salary_min": 25000,
+  "city": "ShangHai",
+  "company":{
+    "name": "bilibili",
+    "company_addr": "ShangHai nanjing road"
+  },
+  "publish_date": "2017-11-18",
+  "comments": 20
+}
+
+GET lagou/job/1
+
+GET lagou/job/1?_source=title,city
+GET lagou/job/1?_source
+
+# 修改文档 
+PUT lagou/job/1
+{
+  "title": "python scrapy enginer",
+  "salary_min": 25000,
+  "city": "ShangHai",
+  "company":{
+    "name": "bilibili",
+    "company_addr": "ShangHai nanjing road"
+  },
+  "publish_date": "2017-11-18"
+}
+
+POST lagou/job/1/_update
+{
+  "doc": {
+    "salary_min": 30000
+  }
+}
+
+# 删除 
+DELETE lagou/job/1
+DELETE lagou/job
+DELETElagou
